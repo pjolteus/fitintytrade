@@ -19,7 +19,7 @@ from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
 
 from dependencies.auth import get_current_user
-from .app.schemas.auth import User
+from app.schemas.auth import user
 from routes import user  # adjust import if your structure differs
 
 from backend.routes import email_report
