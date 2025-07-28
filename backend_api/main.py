@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.api import routes
-from app.routes import user
+from .app.api import routes
+from .app.routes import user
 from deploy.monitoring.logging_config import setup_logging
 from deploy.monitoring.health import router as health_router
 from deploy.monitoring.metrics import router as metrics_router
