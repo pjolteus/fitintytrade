@@ -31,22 +31,6 @@ from db.connection import engine, Base
 from api.routes import api_router
 from config import settings
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ClerkProvider } from '@clerk/clerk-react';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-
-const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <ClerkProvider publishableKey={clerkPubKey}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ClerkProvider>
-);
-
 # --------------------------------
 # 🚀 Validate Critical Environment
 # --------------------------------
