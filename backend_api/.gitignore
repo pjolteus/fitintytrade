@@ -1,0 +1,71 @@
+# ───────────────────────────────
+# 💻 Python / FastAPI / FitintyTrade
+# ───────────────────────────────
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env.*
+!.env.example
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+pytest_cache/
+.pytest_cache/
+
+# Database
+*.sqlite3
+
+# Migrations
+alembic/versions/
+
+# Docker
+*.pid
+*.sock
+docker-compose.override.yml
+__docker_cache__/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# Model artifacts
+*.pth
+*.pt
+checkpoints/
+runs/
+
+# Redis / Celery runtime
+celerybeat-schedule
+celerybeat.pid
+
+# Frontend build (if fullstack)
+dist/
+build/
+node_modules/
+
+

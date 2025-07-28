@@ -1,0 +1,43 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+
+# Database
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9  # For PostgreSQL
+
+# CORS and Middleware
+python-multipart==0.0.9  # if you're handling file uploads or forms
+
+# Async Rate Limiting
+slowapi==0.1.8
+
+# Logging and Observability
+loguru==0.7.2
+
+# Celery + Redis (for background tasks)
+celery==5.4.0
+redis==5.0.4
+python-dotenv==1.0.1
+
+# Environment Management
+python-dotenv==1.0.1
+
+# Optional (useful for Pydantic or validation)
+pydantic==2.7.1
+
+python-jose[cryptography]==3.3.0
+python-dotenv==1.0.1
+
+torch==2.3.0
+tenacity==8.2.3
+
+pandas==2.2.2
+yfinance==0.2.36
+pandas-ta==0.3.14b0
+
+pandas-ta==0.3.14b0
+yfinance==0.2.36
+
+
+
+

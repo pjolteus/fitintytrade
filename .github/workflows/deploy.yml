@@ -1,0 +1,34 @@
+name: Render Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: ✅ Install dependencies
+        run: |
+          pip install -r backend_api/requirements.txt
+          pip install pytest
+
+      - name: 🧪 Run backend tests
+        run: |
+          cd backend_api
+          pytest app/tests
+
+      - name: 🚀 Trigger Render deploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST https://api.render.com/deploy/srv-xxxxxxxxxx?key=${{ secrets.RENDER_API_KEY }}

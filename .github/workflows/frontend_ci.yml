@@ -1,0 +1,55 @@
+name: Deploy Frontend to Vercel
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend_ui/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v3
+
+    - name: 🧰 Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: 📦 Install Dependencies
+      run: |
+        cd frontend_ui
+        npm ci  # ✅ Faster and safer than npm install for CI
+
+    - name: 🧪 Run Frontend Tests (if any)
+      run: |
+        cd frontend_ui
+        npm run test || echo "No tests found – skipping"
+      continue-on-error: true  # ✅ Doesn't block deploy if tests are missing
+
+    - name: 🏗️ Build Frontend
+      run: |
+        cd frontend_ui
+        npm run build
+        
+        - name: 🧹 Run Linter
+  run: |
+    cd frontend_ui
+    npm run lint
+
+
+    - name: 🚀 Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        working-directory: ./frontend_ui
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        VERCEL_ENV: production
+

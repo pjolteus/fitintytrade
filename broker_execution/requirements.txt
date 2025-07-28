@@ -1,0 +1,9 @@
+pandas
+numpy
+requests
+python-dotenv
+ccxt
+ib_insync
+oandapyV20
+ta
+loguru

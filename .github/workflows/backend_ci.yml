@@ -1,0 +1,38 @@
+
+name: Deploy Backend to Railway
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend_api/**'
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          cd backend_api
+          pip install -r requirements.txt || pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis pytest
+
+      - name: Run Tests
+        run: |
+          cd backend_api
+          pytest tests/
+
+      - name: Deploy to Railway
+        if: success()  # Only deploy if tests passed
+        uses: railwayapp/cli@v1
+        with:
+          railwayToken: ${{ secrets.RAILWAY_TOKEN }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
