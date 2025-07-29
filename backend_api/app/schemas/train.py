@@ -14,7 +14,7 @@ class ModelType(str, Enum):
 
 
 class TrainRequest(BaseModel):
-tickers: conlist(str, min_length=1) = Field(..., description="List of ticker symbols to train on")
+    tickers: conlist(str, min_length=1) = Field(..., description="List of ticker symbols to train on")
     model_type: ModelType = Field(..., description="Type of model to train (e.g., LSTM, GRU)")
     epochs: conint(gt=0) = Field(10, description="Number of training epochs")
     batch_size: conint(gt=0) = Field(32, description="Batch size for training")
