@@ -3,10 +3,10 @@ from fastapi.responses import JSONResponse
 from datetime import datetime
 from typing import Optional
 
-from app.schemas.prediction import PredictionInput, PredictionOutput
-from schemas.train import TrainRequest, TrainResponse
-from schemas.status import StatusResponse, ModelInfoResponse
-from schemas.auth import User
+from app.schemas.predict import PredictionInput, PredictionOutput
+from app.schemas.train import TrainRequest, TrainResponse
+from app.schemas.status import StatusResponse, ModelInfoResponse
+from app.schemas.auth import User
 
 from dependencies.auth import get_current_user
 from services.predict_service import run_prediction, get_feature_importance
