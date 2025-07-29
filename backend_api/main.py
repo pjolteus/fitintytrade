@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.api import routes
-from app.routes import user
+from .app.api import routes
+from .app.routes import user
 from deploy.monitoring.logging_config import setup_logging
 from deploy.monitoring.health import router as health_router
 from deploy.monitoring.metrics import router as metrics_router
@@ -19,7 +19,7 @@ from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
 
 from dependencies.auth import get_current_user
-from app.schemas.auth import User
+from .app.schemas.auth import User
 from routes import user  # adjust import if your structure differs
 
 from backend.routes import email_report
