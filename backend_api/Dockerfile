@@ -1,10 +1,9 @@
-
 # Backend Dockerfile for FitintyTrade
 FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY . /app
+COPY backend_api /app/backend_api
 
 RUN pip install --upgrade pip
 RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis
@@ -12,5 +11,6 @@ RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery 
 ENV PYTHONPATH=/app
 
 CMD ["uvicorn", "backend_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
 
 
