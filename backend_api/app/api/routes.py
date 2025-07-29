@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from datetime import datetime
 from typing import Optional
 
-from schemas.prediction import PredictionInput, PredictionOutput
+from app.schemas.prediction import PredictionInput, PredictionOutput
 from schemas.train import TrainRequest, TrainResponse
 from schemas.status import StatusResponse, ModelInfoResponse
 from schemas.auth import User
