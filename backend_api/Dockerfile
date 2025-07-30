@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY . /app
 
+RUN pip install "pydantic[email]"
 RUN pip install --upgrade pip
 RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis
 
