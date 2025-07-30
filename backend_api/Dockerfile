@@ -3,12 +3,13 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY . /app
-COPY requirements.txt .
 
+COPY requirements.txt ./requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 RUN pip install --upgrade pip
 RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis
+
+COPY . /app
 
 # Important: set correct PYTHONPATH to allow `from app...` imports
 ENV PYTHONPATH=/app/backend_api
