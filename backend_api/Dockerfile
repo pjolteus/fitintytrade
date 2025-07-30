@@ -3,18 +3,21 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
+# Copy only requirements first for layer caching
+COPY backend_api/requirements.txt ./requirements.txt
 
-COPY requirements.txt ./requirements.txt
+# Install dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
-RUN pip install --upgrade pip
-RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis
 
-COPY . /app
+# Copy the full backend_api app
+COPY backend_api /app
 
-# Important: set correct PYTHONPATH to allow `from app...` imports
-ENV PYTHONPATH=/app/backend_api
+# Set PYTHONPATH so relative imports like `from app.schemas...` work
+ENV PYTHONPATH=/app
 
+# Expose the FastAPI app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
 
 
 
