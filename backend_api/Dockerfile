@@ -4,8 +4,9 @@ FROM python:3.10-slim
 WORKDIR /app
 
 COPY . /app
+COPY requirements.txt .
 
-RUN pip install "pydantic[email]"
+RUN pip install --upgrade pip && pip install -r requirements.txt
 RUN pip install --upgrade pip
 RUN pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv celery redis
 

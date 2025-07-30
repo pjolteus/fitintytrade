@@ -1,42 +1,42 @@
+# Web Framework
 fastapi==0.111.0
 uvicorn[standard]==0.30.1
 
+# Data Validation
+pydantic[email]==2.7.1  # Includes support for EmailStr validation
+
 # Database
 sqlalchemy==2.0.30
-psycopg2-binary==2.9.9  # For PostgreSQL
+psycopg2-binary==2.9.9  # PostgreSQL support
 
-# CORS and Middleware
-python-multipart==0.0.9  # if you're handling file uploads or forms
-
-# Async Rate Limiting
-slowapi==0.1.8
-
-# Logging and Observability
-loguru==0.7.2
-
-# Celery + Redis (for background tasks)
+# Background Tasks
 celery==5.4.0
 redis==5.0.4
-python-dotenv==1.0.1
 
-# Environment Management
-python-dotenv==1.0.1
-
-# Optional (useful for Pydantic or validation)
-pydantic==2.7.1
-
+# Security
 python-jose[cryptography]==3.3.0
+
+# Rate Limiting
+slowapi==0.1.8
+
+# Env Config
 python-dotenv==1.0.1
 
-torch==2.3.0
+# Logging
+loguru==0.7.2
+
+# Form/File Uploads
+python-multipart==0.0.9
+
+# Retry Logic
 tenacity==8.2.3
 
+# ML + Data Analysis
+torch==2.3.0
 pandas==2.2.2
 yfinance==0.2.36
 pandas-ta==0.3.14b0
 
-pandas-ta==0.3.14b0
-yfinance==0.2.36
 
 
 
