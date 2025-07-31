@@ -2,6 +2,8 @@ from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from schemas.auth import User
+from backend_api.app.dependencies.auth_base import get_current_user  # assumes you have a user system
+from typing import List
 import os
 from dotenv import load_dotenv
 
@@ -50,4 +52,33 @@ async def get_current_user(
         is_active=payload.get("is_active", True),
         role=payload.get("public_metadata", {}).get("role", "user")
     )
+
+def get_current_admin_user(
+    current_user: User = Depends(get_current_user)
+) -> User:
+    if current_user.role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required"
+        )
+
+def require_roles(allowed_roles: List[str]):
+    def role_checker(current_user: User = Depends(get_current_user)) -> User:
+        if current_user.role not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Access denied. Required roles: {allowed_roles}"
+            )
+        return current_user
+    return role_checker
+
+# Predefined roles for convenience
+get_current_admin_user = require_roles(["admin"])
+get_current_superuser = require_roles(["superuser", "admin"])
+get_current_viewer = require_roles(["viewer", "admin", "superuser"])
+
+
+
+
+
 

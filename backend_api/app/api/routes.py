@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 from app.schemas.prediction import PredictionInput, PredictionOutput
-from app.api.train import TrainRequest, TrainResponse
+from app.schemas.train import TrainRequest, TrainResponse
 from app.schemas.status import StatusResponse, ModelInfoResponse
 from app.schemas.auth import User
 
@@ -13,7 +13,7 @@ from services.predict_service import run_prediction, get_feature_importance
 from services.train_service import enqueue_training
 from services.history_service import fetch_prediction_history
 
-from api.execute import router as execute_router
+from app.api.execute import router as execute_router  # Make sure this is correct
 
 router = APIRouter()
 

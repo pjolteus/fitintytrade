@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional, Literal
 from datetime import datetime
-
+from app.strategies.trade_selector import select_top_trades_with_allocatio
 
 class PredictionInput(BaseModel):
     ticker: str = Field(..., description="Asset symbol (e.g., AAPL, EUR/USD, BTC-USD)")
@@ -27,3 +27,12 @@ class PredictionOutput(BaseModel):
     generated_at: datetime = Field(default_factory=datetime.utcnow, description="Timestamp of prediction generation")
 
 
+top_trades = select_top_trades_with_allocation(
+    predictions=model_outputs,  # ← list of prediction dicts from AI
+    total_capital=10000,
+    top_n=6,
+    min_confidence=0.6,
+    exclude_bankrupt=True,
+    diversify_by="asset_type",  # can also use 'sector' or 'pair'
+    allocation_method="score_weighted"
+)

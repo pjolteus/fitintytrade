@@ -2,7 +2,7 @@ import logging
 import time
 import os
 from celery import shared_task
-from connectors import alpaca, oanda, ibr, fxcm
+from connectors import alpaca, oanda, ibr, fxcm, binance, bybit
 from db.connection import SessionLocal
 from db.models.prediction import Prediction, PredictionFeedback
 from utils.alerts import send_alert  # ⬅️ Slack/email via webhook
@@ -13,6 +13,8 @@ BROKER_MAP = {
     "oanda": oanda,
     "ibr": ibr,
     "fxcm": fxcm
+    "binance": binance
+    "bybit": bybit
 }
 
 @shared_task(bind=True, name="trailing_take_profit_task")

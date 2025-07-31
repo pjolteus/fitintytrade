@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api import routes
+from app.api import routes, evaluation
 from app.routes import user
 from deploy.monitoring.logging_config import setup_logging
 from deploy.monitoring.health import router as health_router
@@ -43,6 +43,7 @@ if not settings.JWT_SECRET_KEY:
 app = FastAPI()
 
 app.include_router(user.router, prefix="/api/user", tags=["User"])
+app.include_router(evaluation.router, prefix="/api")
 # ------------------------
 # Initialize FastAPI App
 # ------------------------

@@ -63,3 +63,14 @@ if token:
         csv2 = filtered_preds.to_csv(index=False).encode("utf-8")
         st.download_button("⬇ Export Predictions CSV", csv2, "predictions.csv", "text/csv")
 
+<Button onClick={handleDownloadPDF}>Download Evaluation PDF</Button>
+
+const handleDownloadPDF = async () => {
+  const res = await fetch('/api/evaluation/report?start_date=2024-07-01&end_date=2024-07-27&model_name=lstm_model&export=true');
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'evaluation_report.pdf';
+  a.click();
+};
