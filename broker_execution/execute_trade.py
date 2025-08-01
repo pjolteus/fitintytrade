@@ -62,8 +62,11 @@ async def execute_trade(request: TradeRequest):
             trailing_pct=0.015,
             use_volatility=True,
             position_type="long" if request.side == "buy" else "short",
-            strategy_id=f"api:{datetime.utcnow().isoformat()}"
+            strategy_id=f"api:{datetime.utcnow().isoformat()}",
+            broker_name=request.broker,
+            debug=True
         )
+
         levels = manager.get_current_levels(current_price=entry_price)
         manager.save_to_db(levels)
 
