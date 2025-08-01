@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from schemas.execution import TradeRequest, TradeResponse
-from dependencies.auth import get_current_user
-from services.strategy_executor import schedule_trailing_take_profit
+from app.schemas.execution import TradeRequest, TradeResponse
+from app.dependencies.auth import get_current_user
+from app.services.strategy_executor import schedule_trailing_take_profit
 from connectors import alpaca, oanda, ibr, fxcm, binance, bybit, coinbase
 
 router = APIRouter()
