@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, asc
-from db.connection import SessionLocal
-from db.models.prediction import Prediction
+from app.db.connection import SessionLocal
+from app.db.models import Prediction
 from typing import List, Tuple, Dict
 
 
