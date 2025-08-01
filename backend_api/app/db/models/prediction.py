@@ -7,12 +7,15 @@ from sqlalchemy import (
     DateTime,
     JSON,
     Enum as SQLEnum,
-    Boolean
+    Boolean,
+    Text
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.sql import func
 from enum import Enum
-from db.connection import Base
+
+# Define Base here if not imported from elsewhere
+Base = declarative_base()
 
 
 class PredictionFeedback(Enum):
@@ -50,3 +53,13 @@ class Prediction(Base):
     def __repr__(self):
         return f"<Prediction {self.id} | {self.ticker} | {self.prediction} ({self.confidence:.2f})>"
 
+
+class MarketSnapshotLog(Base):
+    __tablename__ = "market_snapshot_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    symbol = Column(String, index=True)
+    status = Column(String)  # 'success' or 'error'
+    message = Column(Text, nullable=True)
+    row_count = Column(Integer, default=0)
+    timestamp = Column(DateTime, default=func.now())
