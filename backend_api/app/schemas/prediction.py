@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional, Literal
 from datetime import datetime
-from app.strategies.trade_selector import select_top_trades_with_allocatio
+from broker_execution.strategies.trade_selector import select_top_trades_with_allocatio
 
 class PredictionInput(BaseModel):
     ticker: str = Field(..., description="Asset symbol (e.g., AAPL, EUR/USD, BTC-USD)")
