@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi.responses import JSONResponse
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from app.schemas.prediction import PredictionInput, PredictionOutput
 from app.schemas.train import TrainRequest, TrainResponse
@@ -13,17 +13,23 @@ from services.predict_service import run_prediction, get_feature_importance
 from services.train_service import enqueue_training
 from services.history_service import fetch_prediction_history
 
-from app.api.execute import router as execute_router  # Make sure this is correct
+from app.api.execute import router as execute_router  # Broker execution subrouter
+from app.api.predict import predict_endpoint  # Use batch-aware endpoint
 
 router = APIRouter()
 
 # ----------------------------
-# POST /predict
+# POST /predict (Batch + Filter Top Trades)
 # ----------------------------
-@router.post("/predict", response_model=PredictionOutput, tags=["Prediction"])
-async def predict(data: PredictionInput, user: User = Depends(get_current_user)):
+@router.post("/predict", response_model=List[PredictionOutput], tags=["Prediction"])
+async def predict(
+    data: List[PredictionInput],
+    filter_top: bool = Query(False, description="Filter and return only top trades"),
+    user: User = Depends(get_current_user)
+):
     try:
-        result = run_prediction(data, user_id=user.id)
+        # Pass user context and filtering option to backend logic
+        result = await predict_endpoint(requests=data, db=None, filter_top=filter_top)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
