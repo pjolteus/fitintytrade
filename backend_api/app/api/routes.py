@@ -9,9 +9,9 @@ from app.schemas.status import StatusResponse, ModelInfoResponse
 from app.schemas.auth import User
 
 from app.dependencies.auth import get_current_user
-from services.predict_service import run_prediction, get_feature_importance
-from services.train_service import enqueue_training
-from services.history_service import fetch_prediction_history
+from app.services.predict_service import run_prediction, get_feature_importance
+from app.services.train_service import enqueue_training
+from app.services.history_service import fetch_prediction_history
 
 from app.api.execute import router as execute_router  # Broker execution subrouter
 from app.api.predict import predict_endpoint  # Use batch-aware endpoint
