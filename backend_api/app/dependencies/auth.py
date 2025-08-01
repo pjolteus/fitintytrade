@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from app.schemas.auth import User
-from backend_api.app.dependencies.auth_base import get_current_user  # assumes you have a user system
+#from app.dependencies.auth_base import get_current_user  # assumes you have a user system
 from typing import List
 import os
 from dotenv import load_dotenv

@@ -2,9 +2,9 @@
 
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from backend_api.app.db.connection import SessionLocal
-from backend_api.app.db.models import MarketSnapshotLog
-from backend_api.app.dependencies.auth import get_current_admin_user  # Ensure this exists
+from db.connection import SessionLocal
+from db.models import MarketSnapshotLog
+from app.dependencies.auth import get_current_admin_user  # Ensure this exists
 
 router = APIRouter()
 
