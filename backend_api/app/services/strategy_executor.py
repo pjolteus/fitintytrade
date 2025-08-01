@@ -12,8 +12,8 @@ BROKER_MAP = {
     "alpaca": alpaca,
     "oanda": oanda,
     "ibr": ibr,
-    "fxcm": fxcm
-    "binance": binance
+    "fxcm": fxcm,
+    "binance": binance,
     "bybit": bybit
 }
 
