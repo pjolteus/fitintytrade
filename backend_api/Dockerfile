@@ -13,7 +13,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY backend_api /app
 
 # Set PYTHONPATH so relative imports like `from app.schemas...` work
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app/backend_api:/app/broker_execution
 
 # Expose the FastAPI app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
