@@ -1,4 +1,52 @@
-eventkit==1.0.3
-ib-insync==0.9.86
-nest-asyncio==1.6.0
+# Core Libraries
 numpy==2.3.2
+pandas==2.2.2
+requests==2.31.0
+python-dotenv==1.0.1
+loguru==0.7.2
+
+# Trading & Finance
+ccxt==4.1.94
+oandapyV20==0.7.2
+ta==0.11.0
+yfinance==0.2.36
+pandas-ta==0.3.14b0
+ib-insync==0.9.86
+eventkit==1.0.3
+nest-asyncio==1.6.0
+
+# Web Framework
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+
+# Data Validation
+pydantic[email]==2.7.1
+
+# Database
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9
+
+# Background Tasks
+celery==5.4.0
+redis==5.0.4
+
+# Security
+python-jose[cryptography]==3.3.0
+
+# Rate Limiting
+slowapi==0.1.8
+
+# File Uploads
+python-multipart==0.0.9
+
+# Retry Logic
+tenacity==8.2.3
+
+# Machine Learning & Data Analysis
+torch==2.3.0
+scikit-learn==1.4.2
+matplotlib==3.8.4
+seaborn==0.13.2
+plotly==5.22.0
+joblib==1.4.2
+tqdm==4.66.4
