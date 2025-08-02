@@ -6,31 +6,26 @@ COPY frontend_ui/ ./
 RUN npm install && npm run build
 
 
-# -------- Stage 2: Backend + Broker + Supervisor --------
-FROM python:3.10-slim
+# -------- Stage 2: Backend and Broker --------
+FROM python:3.10-slim AS backend
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y git supervisor && apt-get clean
+# System deps
+RUN apt-get update && apt-get install -y git && apt-get clean
 
-# Copy and install Python dependencies
+# Install Python deps
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copy backend and broker execution code
+# Copy source code
 COPY backend_api /app/backend_api
 COPY broker_execution /app/broker_execution
 
-# Copy built frontend to backend static folder
+# Optional: serve frontend via FastAPI static route
 COPY --from=frontend /app/dist /app/backend_api/static
-
-# Copy supervisor config
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENV PYTHONPATH=/app/backend_api:/app/broker_execution
 
-EXPOSE 8000
-
-CMD ["/usr/bin/supervisord", "-n"]
-
+# Run backend
+CMD ["uvicorn", "backend_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
