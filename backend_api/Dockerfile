@@ -8,6 +8,7 @@ COPY backend_api/requirements.txt ./requirements.txt
 
 # Install dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN apt-get update && apt-get install -y git && apt-get clean
 
 # Copy both backend_api and broker_execution folders
 COPY backend_api /app/backend_api
