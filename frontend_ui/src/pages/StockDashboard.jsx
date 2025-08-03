@@ -83,7 +83,7 @@ function StockDashboard() {
         p.prediction === 1 ? 'Call' : 'Put',
         p.entryPrice ?? '—',
         p.exitPrice ?? '—',
-        p.profit?.toFixed(2) + '%' ?? '—',
+        (p.profit != null ? p.profit.toFixed(2) + '%' : '—'),
         new Date(p.date).toLocaleString(),
       ]),
     });
