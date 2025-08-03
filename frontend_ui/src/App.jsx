@@ -7,6 +7,9 @@ import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout';
 import TradeDashboard from './pages/TradeDashboard';
+import StockDashboard from './pages/StockDashboard';
+import CurrencyDashboard from './pages/CurrencyDashboard';
+import CryptoDashboard from './pages/CryptoDashboard';
 
 function App() {
   return (
@@ -17,7 +20,7 @@ function App() {
         toastOptions={{
           duration: 2000,
           style: {
-            background: '#1f2937', // Tailwind dark gray
+            background: '#1f2937',
             color: '#fff',
           },
         }}
@@ -30,6 +33,9 @@ function App() {
           <Route path="predictions" element={<Predictions />} />
           <Route path="settings" element={<Settings />} />
           <Route path="trade-dashboard" element={<TradeDashboard />} />
+          <Route path="stocks" element={<StockDashboard />} />
+          <Route path="currencies" element={<CurrencyDashboard />} />
+          <Route path="crypto" element={<CryptoDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
@@ -38,7 +44,3 @@ function App() {
 }
 
 export default App;
-
-
-
-

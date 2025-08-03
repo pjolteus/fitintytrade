@@ -1,10 +1,25 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Card, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import toast from "react-hot-toast";
+import { executeTrade } from "../api/api"; // ✅ your new API method
 
 const brokers = ["alpaca", "oanda", "ibr", "fxcm", "binance", "coinbase", "bybit"];
 
@@ -35,24 +50,12 @@ export default function TradeExecutorDashboard() {
       qty: parseFloat(qty),
       side,
       leverage: parseInt(leverage),
-      margin_mode: marginMode
+      margin_mode: marginMode,
     };
 
     setLoading(true);
-
     try {
-      const res = await fetch("/api/execute-trade", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Execution failed.");
-      }
-
-      const data = await res.json();
+      const data = await executeTrade(payload);
       toast.success(`✅ Trade executed on ${data.broker.toUpperCase()} (ID: ${data.orderId})`);
     } catch (err) {
       console.error(err);
@@ -64,7 +67,6 @@ export default function TradeExecutorDashboard() {
 
   return (
     <div className="grid gap-6 p-6">
-      {/* Trade Execution Form */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold mb-4">🚀 Broker Selector & Trade Execution</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -79,18 +81,8 @@ export default function TradeExecutorDashboard() {
             </SelectContent>
           </Select>
 
-          <Input
-            placeholder="Symbol (e.g. BTCUSDT)"
-            value={symbol}
-            onChange={e => setSymbol(e.target.value)}
-          />
-
-          <Input
-            placeholder="Quantity"
-            type="number"
-            value={qty}
-            onChange={e => setQty(e.target.value)}
-          />
+          <Input placeholder="Symbol (e.g. BTCUSDT)" value={symbol} onChange={e => setSymbol(e.target.value)} />
+          <Input placeholder="Quantity" type="number" value={qty} onChange={e => setQty(e.target.value)} />
 
           <Select value={side} onValueChange={setSide}>
             <SelectTrigger>
@@ -104,12 +96,7 @@ export default function TradeExecutorDashboard() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          <Input
-            placeholder="Leverage (e.g. 5)"
-            type="number"
-            value={leverage}
-            onChange={e => setLeverage(e.target.value)}
-          />
+          <Input placeholder="Leverage (e.g. 5)" type="number" value={leverage} onChange={e => setLeverage(e.target.value)} />
 
           <Select value={marginMode} onValueChange={setMarginMode}>
             <SelectTrigger>
@@ -121,41 +108,23 @@ export default function TradeExecutorDashboard() {
             </SelectContent>
           </Select>
 
-          <Button
-            onClick={handleExecute}
-            className="col-span-2"
-            disabled={loading}
-          >
+          <Button onClick={handleExecute} className="col-span-2" disabled={loading}>
             {loading ? "Executing..." : "Execute Trade"}
           </Button>
         </div>
       </Card>
 
-      {/* Broker Performance Chart */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold mb-4">📊 Broker Comparison Dashboard</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart
-            data={dummyPerformanceData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
+          <BarChart data={dummyPerformanceData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <XAxis dataKey="name" />
             <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
             <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
             <Tooltip />
             <Legend />
-            <Bar
-              yAxisId="left"
-              dataKey="speed"
-              fill="#8884d8"
-              name="Execution Speed (ms)"
-            />
-            <Bar
-              yAxisId="right"
-              dataKey="successRate"
-              fill="#82ca9d"
-              name="Success Rate (%)"
-            />
+            <Bar yAxisId="left" dataKey="speed" fill="#8884d8" name="Execution Speed (ms)" />
+            <Bar yAxisId="right" dataKey="successRate" fill="#82ca9d" name="Success Rate (%)" />
           </BarChart>
         </ResponsiveContainer>
       </Card>

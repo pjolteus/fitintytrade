@@ -1,21 +1,21 @@
 // Top 10 trading signals list component 
 // src/components/Top10List.jsx
-
 import React, { useEffect, useState } from "react";
-import { fetchTop10Signals } from "../services/api";
+import { useApi } from "../api/api"; // ✅ updated path and hook
 
 const Top10List = () => {
+  const { fetchTop10Signals } = useApi(); // ✅ new hook usage
   const [calls, setCalls] = useState([]);
   const [puts, setPuts] = useState([]);
 
   useEffect(() => {
     fetchTop10Signals()
       .then((res) => {
-        setCalls(res.data.calls);
-        setPuts(res.data.puts);
+        setCalls(res.data.calls || []);
+        setPuts(res.data.puts || []);
       })
       .catch((err) => console.error("Failed to fetch Top10:", err));
-  }, []);
+  }, [fetchTop10Signals]);
 
   return (
     <div className="p-4 bg-white rounded shadow">
@@ -25,7 +25,9 @@ const Top10List = () => {
           <h3 className="text-lg font-bold text-green-600">Calls</h3>
           <ul className="list-disc ml-4">
             {calls.map((item, idx) => (
-              <li key={idx}>{item.symbol} – {(item.confidence * 100).toFixed(1)}%</li>
+              <li key={idx}>
+                {item.symbol} – {(item.confidence * 100).toFixed(1)}%
+              </li>
             ))}
           </ul>
         </div>
@@ -33,7 +35,9 @@ const Top10List = () => {
           <h3 className="text-lg font-bold text-red-600">Puts</h3>
           <ul className="list-disc ml-4">
             {puts.map((item, idx) => (
-              <li key={idx}>{item.symbol} – {(item.confidence * 100).toFixed(1)}%</li>
+              <li key={idx}>
+                {item.symbol} – {(item.confidence * 100).toFixed(1)}%
+              </li>
             ))}
           </ul>
         </div>
@@ -43,3 +47,4 @@ const Top10List = () => {
 };
 
 export default Top10List;
+

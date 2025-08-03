@@ -1,5 +1,6 @@
 {
   "name": "frontend_ui",
+  "type": "module",
   "version": "1.0.0",
   "description": "⚡ FitintyTrade Frontend - React-based UI for the AI-powered FitintyTrade Platform. Real-time dashboards, trading signals, and seamless integration with stock, forex, and crypto markets.",
   "main": "src/main.jsx",

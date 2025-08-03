@@ -9,8 +9,13 @@ import {
   Settings as SettingsIcon,
   Moon,
   Sun,
+  Banknote,
+  Globe,
+  Bitcoin,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
-import toast from 'react-hot-toast'; // ✅ Required for toast notifications
+import toast from 'react-hot-toast';
 import useTheme from '../hooks/useTheme';
 
 function Layout() {
@@ -19,14 +24,32 @@ function Layout() {
   const [selectedBroker, setSelectedBroker] = useState(localStorage.getItem('selectedBroker') || 'Alpaca');
   const location = useLocation();
 
-  const navItems = [
-    { label: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={18} /> },
-    { label: 'Predictions', path: '/predictions', icon: <TrendingUp size={18} /> },
-    { label: 'Trade', path: '/trade-dashboard', icon: <ArrowRightLeft size={18} /> },
-    { label: 'Settings', path: '/settings', icon: <SettingsIcon size={18} /> },
-  ];
+const routeTitles = {
+  '/dashboard': 'Dashboard',
+  '/predictions': 'Predictions',
+  '/trade-dashboard': 'Trade',
+  '/settings': 'Settings',
+  '/stocks': 'Stocks Dashboard',
+  '/currencies': 'Currency Dashboard',
+  '/crypto': 'Crypto Dashboard',
+};
+
+const pageLabel =
+  Object.keys(routeTitles).find((key) => location.pathname.startsWith(key)) || '';
+
+
+  const [assetMenuOpen, setAssetMenuOpen] = useState(() => {
+    const saved = localStorage.getItem('assetMenuOpen');
+    return saved === null ? true : saved === 'true';
+  });
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const toggleAssetMenu = () => {
+    const newState = !assetMenuOpen;
+    setAssetMenuOpen(newState);
+    localStorage.setItem('assetMenuOpen', newState.toString());
+  };
 
   const handleBrokerChange = (e) => {
     const newBroker = e.target.value;
@@ -34,6 +57,19 @@ function Layout() {
     localStorage.setItem('selectedBroker', newBroker);
     toast.success(`🔗 Broker switched to ${newBroker}`);
   };
+
+  const navItems = [
+    { label: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={18} /> },
+    { label: 'Predictions', path: '/predictions', icon: <TrendingUp size={18} /> },
+    { label: 'Trade', path: '/trade-dashboard', icon: <ArrowRightLeft size={18} /> },
+    { label: 'Settings', path: '/settings', icon: <SettingsIcon size={18} /> },
+  ];
+
+  const assetDashboards = [
+    { label: 'Crypto', path: '/crypto', icon: <Bitcoin size={18} /> },
+    { label: 'Currencies', path: '/currencies', icon: <Globe size={18} /> },
+    { label: 'Stocks', path: '/stocks', icon: <Banknote size={18} /> },
+  ].sort((a, b) => a.label.localeCompare(b.label));
 
   const currentPage = navItems.find((item) => location.pathname.startsWith(item.path))?.label || '';
 
@@ -46,7 +82,7 @@ function Layout() {
         </button>
         <h1 className="text-xl font-bold text-purple-800 dark:text-purple-300">FitintyTrade</h1>
         <span className="text-sm text-gray-500 dark:text-gray-300 ml-auto hidden md:block">
-          {currentPage && `» ${currentPage}`}
+          {pageLabel && `» ${routeTitles[pageLabel]}`}
         </span>
 
         {/* Broker Selector */}
@@ -100,6 +136,40 @@ function Layout() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Collapsible Asset Dashboards */}
+            <div>
+              <button
+                onClick={toggleAssetMenu}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800"
+              >
+                <span className="flex items-center gap-2">
+                  <TrendingUp size={18} />
+                  Asset Dashboards
+                </span>
+                {assetMenuOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </button>
+
+              {assetMenuOpen && (
+                <div className="mt-1 pl-6 space-y-1">
+                  {assetDashboards.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium ${
+                        location.pathname.startsWith(item.path)
+                          ? 'bg-purple-700'
+                          : 'hover:bg-purple-800'
+                      }`}
+                    >
+                      {item.icon}
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
         </aside>
 
