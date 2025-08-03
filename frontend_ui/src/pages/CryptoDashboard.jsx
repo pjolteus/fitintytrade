@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPredictionHistory } from '../api/api';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorBanner from '../components/ErrorBanner';
+import ErrorBanner from '../components/shared/ErrorBanner';
 import AssetChart from '../components/AssetChart';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
