@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -8,7 +8,7 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
-} from "../components/ui/select";
+} from "../ui/select";
 import {
   BarChart,
   Bar,
