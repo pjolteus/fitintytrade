@@ -19,7 +19,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import toast from "react-hot-toast";
-import { executeTrade } from "../api/api"; // ✅ your new API method
+import { executeTrade } from "../../api/api"; // ✅ your new API method
 
 const brokers = ["alpaca", "oanda", "ibr", "fxcm", "binance", "coinbase", "bybit"];
 
