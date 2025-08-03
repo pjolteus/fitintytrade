@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPrediction, startTraining } from '../services/api';
+import { getPrediction, startTraining } from '../api/api';
 import Top10List from "../components/Top10List";
 import PredictionChart from "../components/PredictionChart";
 import ModelComparisonChart from "../components/ModelComparisonChart";
