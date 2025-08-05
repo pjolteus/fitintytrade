@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "../ui/card";
+import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -19,7 +19,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import toast from "react-hot-toast";
-import { executeTrade } from "../../api/api"; // ✅ your new API method
+import { executeTrade } from "../../api/api";
 
 const brokers = ["alpaca", "oanda", "ibr", "fxcm", "binance", "coinbase", "bybit"];
 
@@ -46,7 +46,7 @@ export default function TradeExecutorDashboard() {
 
     const payload = {
       broker,
-      symbol: symbol.toUpperCase().trim(),
+      symbol: symbol.trim().toUpperCase(),
       qty: parseFloat(qty),
       side,
       leverage: parseInt(leverage),
@@ -67,9 +67,11 @@ export default function TradeExecutorDashboard() {
 
   return (
     <div className="grid gap-6 p-6">
+      {/* Trade Execution Form */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold mb-4">🚀 Broker Selector & Trade Execution</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Broker */}
           <Select value={broker} onValueChange={setBroker}>
             <SelectTrigger>
               <SelectValue placeholder="Select Broker" />
@@ -81,9 +83,22 @@ export default function TradeExecutorDashboard() {
             </SelectContent>
           </Select>
 
-          <Input placeholder="Symbol (e.g. BTCUSDT)" value={symbol} onChange={e => setSymbol(e.target.value)} />
-          <Input placeholder="Quantity" type="number" value={qty} onChange={e => setQty(e.target.value)} />
+          {/* Symbol */}
+          <Input
+            placeholder="Symbol (e.g. BTCUSDT)"
+            value={symbol}
+            onChange={(e) => setSymbol(e.target.value)}
+          />
 
+          {/* Quantity */}
+          <Input
+            placeholder="Quantity"
+            type="number"
+            value={qty}
+            onChange={(e) => setQty(e.target.value)}
+          />
+
+          {/* Buy/Sell */}
           <Select value={side} onValueChange={setSide}>
             <SelectTrigger>
               <SelectValue placeholder="Side" />
@@ -96,8 +111,15 @@ export default function TradeExecutorDashboard() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          <Input placeholder="Leverage (e.g. 5)" type="number" value={leverage} onChange={e => setLeverage(e.target.value)} />
+          {/* Leverage */}
+          <Input
+            placeholder="Leverage (e.g. 5)"
+            type="number"
+            value={leverage}
+            onChange={(e) => setLeverage(e.target.value)}
+          />
 
+          {/* Margin Mode */}
           <Select value={marginMode} onValueChange={setMarginMode}>
             <SelectTrigger>
               <SelectValue placeholder="Margin Mode" />
@@ -108,23 +130,42 @@ export default function TradeExecutorDashboard() {
             </SelectContent>
           </Select>
 
-          <Button onClick={handleExecute} className="col-span-2" disabled={loading}>
+          {/* Execute Button */}
+          <Button
+            onClick={handleExecute}
+            className="col-span-2"
+            disabled={loading}
+          >
             {loading ? "Executing..." : "Execute Trade"}
           </Button>
         </div>
       </Card>
 
+      {/* Broker Performance Comparison */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold mb-4">📊 Broker Comparison Dashboard</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyPerformanceData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <BarChart
+            data={dummyPerformanceData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
             <XAxis dataKey="name" />
             <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
             <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
             <Tooltip />
             <Legend />
-            <Bar yAxisId="left" dataKey="speed" fill="#8884d8" name="Execution Speed (ms)" />
-            <Bar yAxisId="right" dataKey="successRate" fill="#82ca9d" name="Success Rate (%)" />
+            <Bar
+              yAxisId="left"
+              dataKey="speed"
+              fill="#8884d8"
+              name="Execution Speed (ms)"
+            />
+            <Bar
+              yAxisId="right"
+              dataKey="successRate"
+              fill="#82ca9d"
+              name="Success Rate (%)"
+            />
           </BarChart>
         </ResponsiveContainer>
       </Card>

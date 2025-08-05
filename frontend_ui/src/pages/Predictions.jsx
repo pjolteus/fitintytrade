@@ -1,3 +1,4 @@
+//frontend_ui/src/pages/Prediction.jsx
 import React, { useEffect, useState } from 'react';
 import {
   ChartTabs,
